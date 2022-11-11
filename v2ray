@@ -1,0 +1,96 @@
+{
+    "log": {
+        "access": "/var/log/v2ray/access.log",
+        "error": "/var/log/v2ray/error.log",
+        "loglevel": "info"
+    },
+    "inbounds": [
+        {
+            "port": 56378,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "f93f7ee6-f715-4307-8ddd-0f342b6ed6af",
+                        "alterId": 0
+                    },
+                    {
+                        "alterId": 0,
+                        "id": "5dede14c-ead0-3354-aef1-50c9de860305",
+                        "email": "210702280202@sina.com"
+                    },
+                    {
+                        "alterId": 0,
+                        "id": "ba0f17cb-5e8d-3a0b-825d-347ce5269037",
+                        "email": "220904210210@sina.com"
+                    },
+                    {
+                        "alterId": 0,
+                        "id": "45c27e9d-7eec-3fa2-9484-b6c94f6a91e0",
+                        "email": "210106290202@sina.com"
+                    },
+                    {
+                        "alterId": 0,
+                        "id": "7fabc293-64ce-30fd-ad7e-996eba636de4",
+                        "email": "210706240110@sina.com"
+                    },
+                    {
+                        "alterId": 0,
+                        "id": "5384bddd-131b-386e-9095-fc2d7339895f",
+                        "email": "220102370109@sina.com"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "security": "none",
+                "tlsSettings": {},
+                "tcpSettings": {},
+                "kcpSettings": {},
+                "httpSettings": {},
+                "wsSettings": {
+                    "path": "/xuesheng/",
+                    "headers": {
+                        "Host": "www.baidu.com"
+                    }
+                },
+                "quicSettings": {}
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "protocol": "blackhole",
+            "settings": {},
+            "tag": "block"
+        }
+    ],
+    "routing": {
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "0.0.0.0/8",
+                    "10.0.0.0/8",
+                    "100.64.0.0/10",
+                    "169.254.0.0/16",
+                    "172.16.0.0/12",
+                    "192.0.0.0/24",
+                    "192.0.2.0/24",
+                    "192.168.0.0/16",
+                    "198.18.0.0/15",
+                    "198.51.100.0/24",
+                    "203.0.113.0/24",
+                    "::1/128",
+                    "fc00::/7",
+                    "fe80::/10"
+                ],
+                "outboundTag": "block"
+            }
+        ]
+    }
+}
