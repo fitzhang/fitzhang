@@ -1,0 +1,74 @@
+systemctl start docker
+
+docker run hello-world
+
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+
+echo "net.ipv4.conf.all.proxy_arp = 1" >> /etc/sysctl.conf
+
+sysctl -p /etc/sysctl.conf
+
+
+
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i wg0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT
+iptables -t nat -A POSTROUTING -s 192.168.1.1/24 -o eth33 -j MASQUERADE
+
+
+
+
+
+
+
+docker run -d \
+--name=wg \
+-e WG_HOST=10.8.10.159 \
+-e PASSWORD=2018fspt.net \
+-e WG_DEFAULT_ADDRESS=192.168.1.x \
+-e WG_DEFAULT_DNS=10.120.2.1 \
+-v ~/.wg-easy:/etc/wireguard \
+-p 51822:51820/udp \
+-p 51821:51821/tcp \
+--cap-add=NET_ADMIN \
+--cap-add=SYS_MODULE \
+--sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+--sysctl="net.ipv4.ip_forward=1" \
+--restart unless-stopped \
+weejewel/wg-easy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+docker run -d \
+  --name=wg-easy \
+  -e WG_HOST=??YOUR_SERVER_IP \
+  -e PASSWORD=??YOUR_ADMIN_PASSWORD \
+  -v ~/.wg-easy:/etc/wireguard \
+  -p 51820:51820/udp \
+  -p 51821:51821/tcp \
+  --cap-add=NET_ADMIN \
+  --cap-add=SYS_MODULE \
+  --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+  --sysctl="net.ipv4.ip_forward=1" \
+  --restart unless-stopped \
+  weejewel/wg-easy
+
+
+
+/etc/apt/sources.list.d/archive_uri-https_download_docker_com_linux_ubuntu-jammy.list:1 和 /etc/apt/sources.list.d/docker.list:1
